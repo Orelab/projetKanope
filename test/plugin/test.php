@@ -57,7 +57,7 @@ function mt_sublevel_page2() {
     echo "<h2>" . __( 'Test Sublevel2', 'menu-test' ) . "</h2>";
 }
 function carte(){
-	 echo"hello word";
+	 include 'moteur_recherche.php';
 }
 add_shortcode('test', 'carte');
 
