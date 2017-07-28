@@ -2,7 +2,7 @@
 <?php
 $listadresse=[];
 try {
-  $bdd = new PDO("mysql:host=localhost; dbname=locations; charset=utf8", "root", "j9hn2x2");
+  $bdd = new PDO("mysql:host=localhost; dbname=votre_base_de_donné; charset=utf8", "nom_utilisateur", "mot_de_passe");
 } catch (Exception $e) {
   die("Erreur : ".$e -> getMessage());
 }
@@ -20,7 +20,7 @@ while($donnees=$reponse->fetch()){
 }
 
 for ($i=0; $i <count($rue) ; $i++) {
-    
+
   $listaddress[]=['ID'=>$id[$i], 'Rue'=>$rue[$i], 'CodePostal'=>$code_postal[$i], 'Ville'=>$Ville[$i], 'Lat'=>$lat[$i], 'Lng'=>$long[$i]];
 }
 
