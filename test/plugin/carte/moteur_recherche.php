@@ -8,16 +8,16 @@
       <!-- formulaire du moteur de recherche dans action il faudra mettre le vrai
            chemin pour votre site -->
     <form class="" action" http://localhost/wp-v1/wordpress/index.php/page-d-exemple" method="post">
-      <label for="city">Ville</label>
-      <input type="text" name="city" id='city'>
+      <label for="ville">Ville</label>
+      <input type="text" name="ville" id='ville'>
       <label for="departement">departement</label>
       <input type="text" name="departement" id='departement'>
-      <label for="zip_code">code postal</label>
-      <input type="text" name="zip_code" id='zip_code'>
-      <label for="activity">secteur activité</label>
-      <input type="text" name="activity" id='activity'>
-      <label for="accommodation">hebergement</label>
-      <input type="text" name="accomodation" id='accomodation'>
+      <label for="code postal">code postal</label>
+      <input type="text" name="code postal" id='code postal'>
+      <label for="activite">secteur activité</label>
+      <input type="text" name="activite" id='activite'>
+      <label for="hebergement">hebergement</label>
+      <input type="text" name="hebergement" id='hebergement'>
       <label for="covoit">covoiturage</label>
       <input type="text" name="covoit" id='covoit'>
       <button type="submit">send</button>
@@ -25,25 +25,27 @@
 
 <?php
 // connection a la base de donnée
- /* try {
-    $bdd = new pdo ('mysql:host=localhost;dbname=test', 'nolan','adminannu');
+  try {
+    $bdd = new PDO("mysql:host=localhost; dbname=locations; charset=utf8", "root", "j9hn2x2");
   }
    catch (Exception $e) {
     die('Erreur:'.$e->getMessage());
   }
-   $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);*/
+   $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
    //condition pour verifier si un champ du formulaire est rempli
   // si oui on recupere les info dans un tableau et on recupere
   // les entrepreneurs par le critère de recherche
 if(!empty($_POST)){
 
   $postArray = [
-    "city" => "city",
+    "nom" => "nom",
+    "prenom" => "prenom",
+    "ville" => "ville",
     "departement" => "departement",
-    "zip_code" => "zip_code",
-    "activity" => "activity",
+    "code postal" => "code postal",
+    "activite" => "activite",
     "covoit" => "covoit",
-    "accommodation" => "accommodation"
+    "hebergement" => "hebergement"
   ];
   $usedPost = false;
   foreach ($postArray as $key => $value) {
@@ -52,7 +54,7 @@ if(!empty($_POST)){
     };
   }
 
-  $sql = 'SELECT * FROM users_location WHERE '.$usedPost.' = "'.$_POST[$usedPost].'"';
+  $sql = 'SELECT * FROM `TABLE 2` WHERE '.$usedPost.' = "'.$_POST[$usedPost].'"';
   $response = $bdd->query($sql);
   // si aucun champ n'est rempli renvoie un message d'erreur
 }else{
@@ -64,11 +66,13 @@ if(!empty($_POST)){
  <table>
    <thead>
      <tr>
-       <th>ID</th>
-       <th>CITY</th>
+       <th>Nom</th>
+       <th>Prenom</th>
+       <th>Num tel</th>
+       <th>Ville</th>
        <th>DEPARTEMENT</th>
-       <th>ZIP_CODE</th>
-       <th>activity</th>
+       <th>Code Postal</th>
+       <th>activité</th>
        <th>HEBERGEMENT</th>
        <th>COVOITURAGE</th>
      </tr>
@@ -79,12 +83,14 @@ if(!empty($_POST)){
         while ($donnees = $response->fetch()) {
        ?>
        <tr>
-         <td><?= $donnees['id']; ?></td>
-         <td><?= $donnees['city'];?></td>
+         <td><?= $donnees['nom']?></td>
+         <td><?= $donnees['prenom']?></td>
+         <td><?= $donnees['mobile']?></td>
+         <td><?= $donnees['ville'];?></td>
          <td><?= $donnees['departement']; ?></td>
-         <td><?= $donnees['zip_code'] ?></td>
-         <td><?= $donnees['activity'] ?></td>
-         <td><?= $donnees['accommodation'] ?></td>
+         <td><?= $donnees['code postal'] ?></td>
+         <td><?= $donnees['activite'] ?></td>
+         <td><?= $donnees['hebergement'] ?></td>
          <td><?= $donnees['covoit'] ?></td>
        </tr>
    <?php }?>

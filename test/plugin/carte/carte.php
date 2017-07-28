@@ -51,7 +51,6 @@ $geocoder = "http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=
     $lng = $listaddress[$i]["Lng"];
     $id = $listaddress[$i]["ID"];
     $bdd->exec("UPDATE `TABLE 2` SET latitude = $lat, longitude = $lng WHERE `ID` = $id");
-
   }
 
   //var_dump($listaddressjson);
