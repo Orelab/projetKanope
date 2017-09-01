@@ -94,7 +94,7 @@ InitialiserCarte( <?=$listaddressjson?> );
 	<tbody>
 		<?php
 
-		function dept($code){
+		function format_dept($postcode){
 			$dept = [
 				31 => 'Haute-Garonne',
 				32 => 'Gers',
@@ -103,7 +103,15 @@ InitialiserCarte( <?=$listaddressjson?> );
 				65 => 'Hautes-Pyrénées',
 				82 => 'Tarn-et-Garonne'
 			];
-			return isset($dept[$code]) ? $dept[$code] : '';
+			$postcode = substr($postcode,0,2);
+			return isset($dept[$postcode]) ? $dept[$postcode] : '';
+		}
+
+		function format_phone($str){
+			$str = str_replace('+33','0',$str);
+			$str = str_replace(' ','',$str);
+			$str = chunk_split($str,2,'.');
+			return trim($str,'.');
 		}
 
 		foreach( $db as $u ):
@@ -123,11 +131,11 @@ InitialiserCarte( <?=$listaddressjson?> );
 			?>
 			<tr>
 				<td><?= isset($u['profilepicture'])?'<img src="'.$u['profilepicture'].'"/>':'' ?></td>
-				<td><?= isset($u['first_name'])?$u['first_name']:'' ?></td>
-				<td><?= isset($u['last_name'])?$u['last_name']:'' ?></td>
-				<td><?= isset($u['phone_number'])?$u['phone_number']:'' ?></td>
-				<td><?= isset($u['user_ville'])?$u['user_ville']:'' ?></td>
-				<td><?= isset($u['user_codepostal'])?dept(substr($u['user_codepostal'],0,2)):'' ?></td>
+				<td><?= isset($u['first_name'])?ucwords(strtolower($u['first_name'])):'' ?></td>
+				<td><?= isset($u['last_name'])?ucwords(strtolower($u['last_name'])):'' ?></td>
+				<td><?= isset($u['phone_number'])?format_phone($u['phone_number']):'' ?></td>
+				<td><?= isset($u['user_ville'])?ucwords(strtolower($u['user_ville'])):'' ?></td>
+				<td><?= isset($u['user_codepostal'])?format_dept($u['user_codepostal']):'' ?></td>
 				<td><?= isset($u['user_codepostal'])?$u['user_codepostal']:'' ?></td>
 				<td><?= isset($u['user_metiers'])?implode(', ',json_decode($u['user_metiers'])):'' ?></td>
 				<td>
