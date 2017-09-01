@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -56,6 +57,7 @@ if(!empty($_POST)){
 
   $sql = 'SELECT * FROM `TABLE 2` WHERE '.$usedPost.' = "'.$_POST[$usedPost].'"';
   $response = $bdd->query($sql);
+
   // si aucun champ n'est rempli renvoie un message d'erreur
 }else{
 
@@ -100,3 +102,4 @@ if(!empty($_POST)){
  </table>
 </body>
 </html>
+
